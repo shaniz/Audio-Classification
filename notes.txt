@@ -30,3 +30,7 @@ num workers = 1
 32,3,128,250 - inputs size
 inception X 299X299
 ###
+
+
+https://www.kaggle.com/datasets/chrisfilo/urbansound8k?resource=download
+https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification
