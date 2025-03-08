@@ -93,5 +93,3 @@ if __name__ == "__main__":
             scheduler = None
 
         train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn, writer, params, i, scheduler)
-
-

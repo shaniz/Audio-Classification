@@ -1,5 +1,7 @@
 changed:
     resize for inception
+    models/Inception - aux_logits
+    datasetaug - function call
 
      compute problems:
         num_workers in fetch_data
