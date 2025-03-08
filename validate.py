@@ -1,5 +1,6 @@
 import torch
 
+
 def evaluate(model, device, test_loader):
 	correct = 0
 	total = 0
@@ -15,4 +16,4 @@ def evaluate(model, device, test_loader):
 			total += target.size(0)
 			correct += (predicted == target).sum().item()
 
-	return (100*correct/total)
+	return 100*correct/total
