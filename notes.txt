@@ -1,0 +1,32 @@
+changed:
+    resize for inception
+
+     compute problems:
+        num_workers in fetch_data
+        batch size
+
+### GTZAN ###
+gtzan - 50 iterations
+num workers = 2 for inception
+num workers = 8 for persistent_workers=True
+
+32,3,128,1500 - inputs size
+inception X 299X299
+densnet V   29X29
+resnet  V
+###
+
+### ESC ###
+esc - 100 iterations
+num workers = 8
+
+32,3,128,250 - inputs size
+###
+
+### USC ###
+usc - 492 iterations
+num workers = 1
+
+32,3,128,250 - inputs size
+inception X 299X299
+###
