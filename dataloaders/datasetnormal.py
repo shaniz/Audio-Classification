@@ -28,5 +28,5 @@ class AudioDataset(Dataset):
 
 def fetch_dataloader(pkl_dir, dataset_name, batch_size, num_workers):
 	dataset = AudioDataset(pkl_dir, dataset_name)
-	dataloader = DataLoader(dataset, shuffle=True, batch_size=batch_size, num_workers=num_workers)
+	dataloader = DataLoader(dataset, shuffle=True, batch_size=batch_size, num_workers=num_workers)#, persistent_workers=True)  # Added persistent_workers
 	return dataloader

@@ -1,15 +1,11 @@
 import torch
-import torchvision
 import torch.nn as nn
-import numpy as np
-import json
 import utils
 import validate
 import argparse
 import models.densenet
 import models.resnet
 import models.inception
-import time
 import dataloaders.datasetaug
 import dataloaders.datasetnormal
 
@@ -74,8 +70,8 @@ if __name__ == "__main__":
 
     for i in range(1, params.num_folds+1):
         if params.dataaug:
-            train_loader = dataloaders.datasetaug.fetch_dataloader( "{}training128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers, 'train')
-            val_loader = dataloaders.datasetaug.fetch_dataloader("{}validation128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers, 'validation')
+            train_loader = dataloaders.datasetaug.fetch_dataloader( "{}training128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers, 'train', params.model)
+            val_loader = dataloaders.datasetaug.fetch_dataloader("{}validation128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers, 'validation', params.model)
         else:
             train_loader = dataloaders.datasetnormal.fetch_dataloader( "{}training128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers)
             val_loader = dataloaders.datasetnormal.fetch_dataloader("{}validation128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers)

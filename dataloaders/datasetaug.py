@@ -26,7 +26,8 @@ class MelSpectrogram(object):
 		if self.mode=="train":
 			pitch_shift = np.random.randint(limits[0][0], limits[0][1] + 1)
 			time_stretch = np.random.random() * (limits[1][1] - limits[1][0]) + limits[1][0]
-			new_audio = librosa.effects.time_stretch(librosa.effects.pitch_shift(sample, self.sr, pitch_shift), time_stretch)
+			# new_audio = librosa.effects.time_stretch(librosa.effects.pitch_shift(sample, self.sr, pitch_shift), time_stretch)
+			new_audio = librosa.effects.time_stretch(librosa.effects.pitch_shift(sample, sr=self.sr, n_steps=pitch_shift), rate=time_stretch)
 		else:
 			pitch_shift = 0
 			time_stretch = 1
@@ -48,12 +49,15 @@ class MelSpectrogram(object):
 		return specs
 
 class AudioDataset(Dataset):
-	def __init__(self, pkl_dir, dataset_name, transforms=None):
+	def __init__(self, pkl_dir, dataset_name, to_resize, transforms=None):
 		self.transforms = transforms
+		self.resize = torchvision.transforms.Compose([torchvision.transforms.Resize(299)])
 		self.data = []
 		self.length = 1500 if dataset_name=="GTZAN" else 250
 		with open(pkl_dir, "rb") as f:
 			self.data = pickle.load(f)
+		self.to_resize = to_resize
+
 	def __len__(self):
 		if self.transforms.mode == "train":
 			return 2*len(self.data)
@@ -65,17 +69,20 @@ class AudioDataset(Dataset):
 			entry = self.data[new_idx]
 			if self.transforms:
 				values = self.transforms(entry["audio"])
+
 		else:
 			entry = self.data[idx]
 			values = torch.Tensor(entry["values"].reshape(-1, 128, self.length))
+
+		if self.to_resize:
+			values = self.resize(values)
+
 		target = torch.LongTensor([entry["target"]])
 		return (values, target)
 
-def fetch_dataloader(pkl_dir, dataset_name, batch_size, num_workers, mode):
+def fetch_dataloader(pkl_dir, dataset_name, batch_size, num_workers, mode, model):
 	transforms = MelSpectrogram(128, mode, dataset_name)
-	dataset = AudioDataset(pkl_dir, dataset_name, transforms=transforms)
-	dataloader = DataLoader(dataset,shuffle=True, batch_size=batch_size, num_workers=num_workers)
+	to_resize = True if model == 'inception' else False
+	dataset = AudioDataset(pkl_dir, dataset_name, to_resize, transforms=transforms)
+	dataloader = DataLoader(dataset,shuffle=True, batch_size=batch_size, num_workers=num_workers)#, persistent_workers=True)  # Added persistent_workers
 	return dataloader
-	
-
-	
