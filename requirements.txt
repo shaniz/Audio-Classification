@@ -1,0 +1,10 @@
+librosa
+pandas
+torch
+torchaudio
+torchvision
+pillow
+tqdm
+tensorboardX
+
+lmdb
