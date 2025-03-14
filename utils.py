@@ -67,4 +67,3 @@ def initialize_weights(m):
 	print(classname)
 	if classname.find('Linear') != -1:
 		nn.init.ones_(m.weight.data)
-
