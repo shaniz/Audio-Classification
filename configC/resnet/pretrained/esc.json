@@ -11,5 +11,5 @@
 	"lr": 1e-4,
     "weight_decay": 1e-3,
     "num_folds": 5,
-    "checkpoint_dir": "checkpoints/resnet/pretrained/esc"
+    "checkpoint_dir": "checkpointsC/resnet/pretrained/esc"
 }

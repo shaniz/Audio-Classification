@@ -11,5 +11,5 @@
 	"lr": 1e-4,
     "weight_decay": 1e-3,
     "num_folds": 10,
-    "checkpoint_dir": "checkpoints/densenet/pretrained/usc"
+    "checkpoint_dir": "checkpointsC/densenet/pretrained/usc"
 }

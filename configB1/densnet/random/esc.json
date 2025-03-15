@@ -7,9 +7,9 @@
 	"model": "densenet",
 	"batch_size": 32,
 	"num_workers": 8,
-	"epochs": 2,
+	"epochs": 450,
 	"lr": 1e-4,
     "weight_decay": 1e-3,
     "num_folds": 5,
-    "checkpoint_dir": "checkpoints/densenet/random/esc"
+    "checkpoint_dir": "checkpointsB1/densenet/random/esc"
 }
