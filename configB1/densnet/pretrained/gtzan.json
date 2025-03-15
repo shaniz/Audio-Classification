@@ -4,7 +4,7 @@
 	"dataaug": true,
 	"pretrained": true,
 	"scheduler": true,
-	"model": "inception",
+	"model": "densenet",
 	"batch_size": 16,
 	"batch_size_orig": 32,
 	"num_workers": 2,
@@ -13,5 +13,5 @@
 	"lr": 1e-4,
     "weight_decay": 1e-3,
     "num_folds":1,
-    "checkpoint_dir": "checkpoints/gtzan/"
+    "checkpoint_dir": "checkpoints/densenet/pretrained/gtzan"
 }

@@ -4,12 +4,12 @@
 	"dataaug": true,
 	"pretrained": true,
 	"scheduler": true,
-	"model": "inception",
+	"model": "resnet",
 	"batch_size": 32,
 	"num_workers": 1,
 	"epochs": 70,
 	"lr": 1e-4,
     "weight_decay": 1e-3,
     "num_folds": 10,
-    "checkpoint_dir": "checkpoints/usc/"
+    "checkpoint_dir": "checkpoints/resnet/pretrained/usc"
 }
