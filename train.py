@@ -50,7 +50,7 @@ def train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_
         # model_num- for C
         # layer - for B3
         checkpoint_dir = os.path.join(params.checkpoint_dir, str(model_num), str(layer))
-        if epoch > 0 and (epoch % 20 == 0 or epoch == 70 or epoch == 450):
+        if epoch > 0 and (epoch % 20 == 0 or epoch == 69 or epoch == 449):  # 70 or 450
             utils.save_checkpoint({"epoch": epoch + 1,
                                    "model": model.state_dict(),
                                    "optimizer": optimizer.state_dict()}, is_best, split, "{}".format(checkpoint_dir))
@@ -61,6 +61,6 @@ def train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_
 
 
 def lr_lambda(epoch):
-    if epoch == 300 | epoch == 350:
+    if epoch == 299 | epoch == 349:  # 300 or 350
         return 0.1
     return 1.0

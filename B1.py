@@ -12,7 +12,7 @@ import models.resnet
 import train
 import utils
 
-config_path = "config/B1/resnet/pretrained"
+config_path = "config/B1/inception"
 results_path = "results/B1.csv"
 os.makedirs(os.path.dirname(results_path), exist_ok=True)
 model_classes = {
