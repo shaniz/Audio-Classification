@@ -14,6 +14,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--csv_file", type=str)
 parser.add_argument("--data_dir", type=str)
 parser.add_argument("--store_dir", type=str)
+parser.add_argument("--sampling_rate", default=22050, type=int)
 
 
 def extract_spectrogram(values, clip, entries, sr):
@@ -53,7 +54,7 @@ def extract_features(audios):
     for audio in audio_names:
         entries = audios.loc[audios["slice_file_name"] == audio].to_dict(orient="records")
         clip, sr = librosa.load("{}fold{}/{}".format(args.data_dir, entries[0]["fold"],
-                                                     audio))  # All audio all sampled to a sampling rate of 22050
+                                                     audio), sr=args.sampling_rate)  # All audio all sampled to a sampling rate of 22050
         extract_spectrogram(values, clip, entries, sr)
         print("Finished audio {}".format(audio))
     return values

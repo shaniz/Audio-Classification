@@ -21,7 +21,7 @@ python preprocessing/preprocessingESC.py --csv_file /path/to/file.csv --data_dir
 For UrbanSound8K:
 
 ```console
-python preprocessing/preprocessingUSC.py --csv_file /path/to/file.csv --data_dir /path/to/audio_data/ --store_dir spectrograms/usc/ --sampling_rate 44100
+python preprocessing/preprocessingUSC.py --csv_file /path/to/file.csv --data_dir /path/to/audio_data/ --store_dir spectrograms/usc/ --sampling_rate 22050
 ```
 
 For GTZAN:
