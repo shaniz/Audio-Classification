@@ -26,7 +26,7 @@ class DeepEnsemble(nn.Module):
         return ensemble_output
 
 
-config_path = "config/C/resnet/pretrained/esc.json"
+config_path = "config/C/densenet"
 results_path = "results/C.csv"
 os.makedirs(os.path.dirname(results_path), exist_ok=True)
 model_classes = {
@@ -36,7 +36,7 @@ model_classes = {
 }
 log_dir = "runs/C"
 columns = ["Model", "Model Number", "Dataset", "Pretrained", "Fold", "Accuracy", "Best Accuracy"]
-num_models = 1  # Number of models for the deep-ensemble
+num_models = 5  # Number of models for the deep-ensemble
 fold_num = 1  # Working on this fold always
 
 if __name__ == "__main__":
