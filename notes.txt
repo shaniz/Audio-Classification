@@ -2,6 +2,14 @@ changed:
     resize for inception
     models/Inception - aux_logits
     datasetaug - function call
+    os.mkdir(checkpoint)
+    lr scheduler for random
+    remove checks for aug+scheduler (always true)
+    check usc-resample sampling rate
+    return model not checkpoint in load state dict
+    cutoff - not mentioned on what network? the finetuned? what exactly to remove?
+
+    REMAIN - cutoff, IG, SVCCA
 
      compute problems:
         num_workers in fetch_data
@@ -36,3 +44,6 @@ inception X 299X299
 
 https://www.kaggle.com/datasets/chrisfilo/urbansound8k?resource=download
 https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification
+
+
+for gtzan - run train another time

@@ -1,6 +1,8 @@
-import shutil
 import json
 import os
+import shutil
+
+import pandas as pd
 import torch
 import torch.nn as nn
 
@@ -61,7 +63,7 @@ def load_checkpoint(checkpoint, model, optimizer=None, parallel=False):
 
     if optimizer:
         optimizer.load_state_dict(checkpoint["optimizer"])
-    return checkpoint
+    return model
 
 
 def initialize_weights(m):
@@ -80,3 +82,15 @@ def list_files(path):
         for file in files:
             file_paths.append(os.path.join(root, file))
     return file_paths
+
+
+def wrtie_to_csv(columns, path, data=None):
+    # Writing results to csv
+    if data:
+        df = pd.DataFrame(data=[data],
+                          columns=columns)
+        header = False
+    else:
+        df = pd.DataFrame(columns=columns)
+        header = True
+    df.to_csv(path, mode='a', header=header, index=False)

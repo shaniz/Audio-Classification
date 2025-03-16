@@ -1,0 +1,17 @@
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
+densenet/cutoff,ESC,1,denseblock3,11.25,11.25
+densenet/cutoff,ESC,1,denseblock4,30.75,30.75
+Model,Dataset,Fold,Layer,Accuracy,Best Accuracy
