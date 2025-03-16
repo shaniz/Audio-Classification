@@ -1,6 +1,6 @@
 import argparse
-import os
 import pickle as pkl
+import os
 
 import librosa
 import numpy as np
@@ -57,6 +57,7 @@ def extract_features(audios):
 
 if __name__ == "__main__":
     args = parser.parse_args()
+    os.makedirs(args.store_dir, exist_ok=True)
     root_dir = args.data_dir
 
     training_audios = []

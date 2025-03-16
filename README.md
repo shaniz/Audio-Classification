@@ -15,19 +15,19 @@ The preprocessing is done separately to save time during the training of the mod
 For ESC-50:
 
 ```console
-python preprocessing/preprocessingESC.py --csv_file /path/to/file.csv --data_dir /path/to/audio_data/ --store_dir spectrograms/esc --sampling_rate 44100
+python preprocessing/preprocessingESC.py --csv_file /path/to/file.csv --data_dir /path/to/audio_data/ --store_dir spectrograms/esc/ --sampling_rate 44100
 ```
 
 For UrbanSound8K:
 
 ```console
-python preprocessing/preprocessingUSC.py --csv_file /path/to/file.csv --data_dir /path/to/audio_data/ --store_dir spectrograms/usc --sampling_rate 44100
+python preprocessing/preprocessingUSC.py --csv_file /path/to/file.csv --data_dir /path/to/audio_data/ --store_dir spectrograms/usc/ --sampling_rate 44100
 ```
 
 For GTZAN:
 
 ```console
-python preprocessing/preprocessingGTZAN.py --data_dir /path/to/audio_data/ --store_dir spectrograms/gtzan --sampling_rate 22050
+python preprocessing/preprocessingGTZAN.py --data_dir /path/to/audio_data/ --store_dir spectrograms/gtzan/ --sampling_rate 22050
 ```
 
 ### Training the Models

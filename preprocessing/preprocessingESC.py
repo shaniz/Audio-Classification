@@ -1,5 +1,6 @@
 import argparse
 import pickle as pkl
+import os
 
 import librosa
 import numpy as np
@@ -58,6 +59,8 @@ def extract_features(audios):
 
 if __name__ == "__main__":
     args = parser.parse_args()
+    os.makedirs(args.store_dir, exist_ok=True)
+
     audios = pd.read_csv(args.csv_file, skipinitialspace=True)
     num_folds = 5
 
