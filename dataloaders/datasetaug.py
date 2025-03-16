@@ -89,7 +89,7 @@ def fetch_dataloader(pkl_dir, dataset_name, batch_size, num_workers, mode, model
     to_resize = True if model == 'inception' else False
     dataset = AudioDataset(pkl_dir, dataset_name, to_resize, transforms=transforms)
     dataloader = DataLoader(dataset, shuffle=True, batch_size=batch_size,
-                            num_workers=num_workers)  # , persistent_workers=True)
+                            num_workers=num_workers, persistent_workers=True)  # , persistent_workers=True)
     return dataloader
 
 

@@ -50,9 +50,10 @@ def train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_
         # model_num- for C
         # layer - for B3
         checkpoint_dir = os.path.join(params.checkpoint_dir, str(model_num), str(layer))
-        utils.save_checkpoint({"epoch": epoch + 1,
-                               "model": model.state_dict(),
-                               "optimizer": optimizer.state_dict()}, is_best, split, "{}".format(checkpoint_dir))
+        if epoch > 0 and (epoch % 20 == 0 or epoch == 70 or epoch == 450):
+            utils.save_checkpoint({"epoch": epoch + 1,
+                                   "model": model.state_dict(),
+                                   "optimizer": optimizer.state_dict()}, is_best, split, "{}".format(checkpoint_dir))
         writer.add_scalar("data{}/trainingLoss{}".format(params.dataset_name, split), avg_loss, epoch)
         writer.add_scalar("data{}/valAcc{}".format(params.dataset_name, split), acc, epoch)
     writer.close()

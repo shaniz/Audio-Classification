@@ -12,7 +12,7 @@ import models.resnet
 import train
 import utils
 
-config_path = "config/B1/densnet"
+config_path = "config/B1/resnet/pretrained"
 results_path = "results/B1.csv"
 os.makedirs(os.path.dirname(results_path), exist_ok=True)
 model_classes = {
@@ -25,6 +25,7 @@ columns = ["Model", "Dataset", "Pretrained", "Fold", "Accuracy", "Best Accuracy"
 
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
     utils.wrtie_to_csv(columns=columns, path=results_path)
     loss_fn = nn.CrossEntropyLoss()
     config_files = utils.list_files(config_path)

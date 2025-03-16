@@ -1,0 +1,5 @@
+{
+  "dataset_name": "ESC",
+  "pretrained_checkpoint_dir": "checkpoints/B1/densenet/pretrained/esc/last1.pth.tar",
+  "random_checkpoint_dir": "checkpoints/B1/densenet/random/esc/last1.pth.tar"
+}

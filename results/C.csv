@@ -1,3 +1,0 @@
-Model,Model Number,Dataset,Pretrained,Fold,Accuracy,Best Accuracy
-resnet,0,ESC,True,1,71.75,71.75
-ensemble-resnet,-,ESC,True,1,71.75,-
