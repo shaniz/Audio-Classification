@@ -12,8 +12,8 @@ import models.resnet
 import train
 import utils
 
-config_path = "config/B1/inception"
-results_path = "results/B1.csv"
+config_path = "config/B1/resnet"
+results_path = "results/B1-resnet.csv"
 os.makedirs(os.path.dirname(results_path), exist_ok=True)
 model_classes = {
     "densenet": models.densenet.DenseNet,
@@ -21,7 +21,7 @@ model_classes = {
     "inception": models.inception.Inception,
 }
 log_dir = "runs/B1"
-columns = ["Model", "Dataset", "Pretrained", "Fold", "Accuracy", "Best Accuracy"]
+columns = ["Model", "Dataset", "Pretrained", "Fold", "Acc", "Best Acc", "Best Acc - Epoch"]
 
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -50,11 +50,11 @@ if __name__ == "__main__":
             else:
                 scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, train.lr_lambda)
 
-            acc, best_acc = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn,
+            acc, best_acc, best_acc_epoch = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn,
                                                      writer,
                                                      params, fold_num, scheduler)
 
-            utils.wrtie_to_csv(data=[params.model, params.dataset_name, params.pretrained, fold_num, acc, best_acc],
+            utils.wrtie_to_csv(data=[params.model, params.dataset_name, params.pretrained, fold_num, acc, best_acc, best_acc_epoch],
                                columns=columns, path=results_path)
             print(
                 f"Saved results for {params.model} | {params.dataset_name} | pretrained- {params.pretrained} | fold {fold_num}")

@@ -19,7 +19,7 @@ model_classes = {
     "densenet/cutoff": models.densenet.DenseNetModelCutoff
 }
 log_dir = "runs/B3"
-columns = ["Model", "Dataset", "Fold", "Layer", "Accuracy", "Best Accuracy"]
+columns = ["Model", "Dataset", "Fold", "Layer", "Acc", "Best Acc", "Best Acc - Epoch"]
 layers_by_model = {
     "densenet/weight_fusion": ["conv0", "denseblock1", "denseblock2", "denseblock3", "denseblock4"],
     "densenet/weight_freeze": ["conv0", "denseblock1", "denseblock2", "denseblock3", "denseblock4"],
@@ -52,12 +52,12 @@ if __name__ == "__main__":
                 optimizer = torch.optim.Adam(model.parameters(), lr=params.lr, weight_decay=params.weight_decay)
                 # Only pretrained here
                 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)
-                acc, best_acc = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn,
+                acc, best_acc, best_acc_epoch = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn,
                                                          writer,
                                                          params, fold_num, scheduler, layer=layer)
 
                 utils.wrtie_to_csv(
-                    data=[params.model, params.dataset_name, fold_num, layer, acc, best_acc],
+                    data=[params.model, params.dataset_name, fold_num, layer, acc, best_acc, best_acc_epoch],
                     columns=columns, path=results_path)
                 print(
                     f"Saved results for {params.model} | {params.dataset_name} | fold {fold_num} | layer {layer}")

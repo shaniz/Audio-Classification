@@ -35,7 +35,7 @@ model_classes = {
     "inception": models.inception.Inception,
 }
 log_dir = "runs/C"
-columns = ["Model", "Model Number", "Dataset", "Pretrained", "Fold", "Accuracy", "Best Accuracy"]
+columns = ["Model", "Model Number", "Dataset", "Pretrained", "Fold", "Acc", "Best Acc", "Best Acc - Epoch"]
 num_models = 5  # Number of models for the deep-ensemble
 fold_num = 1  # Working on this fold always
 
@@ -62,11 +62,11 @@ if __name__ == "__main__":
             optimizer = torch.optim.Adam(model.parameters(), lr=params.lr, weight_decay=params.weight_decay)
             # Only pretrained here
             scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)  # Always weight_fusion here
-            acc, best_acc = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn,
+            acc, best_acc, best_acc_epoch = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn,
                                                      writer, params, fold_num, scheduler, model_num)
 
             utils.wrtie_to_csv(
-                data=[params.model, model_num, params.dataset_name, params.pretrained, fold_num, acc, best_acc],
+                data=[params.model, model_num, params.dataset_name, params.pretrained, fold_num, acc, best_acc, best_acc_epoch],
                 columns=columns, path=results_path)
             print(
                 f"Saved results for {params.model} {model_num} | {params.dataset_name} | Pretrained- {params.pretrained} | Fold {fold_num}")
@@ -78,7 +78,7 @@ if __name__ == "__main__":
         acc = validate.evaluate(ensemble_model, device, val_loader)
 
         utils.wrtie_to_csv(
-            data=[f"ensemble-{params.model}", "-", params.dataset_name, params.pretrained, fold_num, acc, "-"],
+            data=[f"ensemble-{params.model}", "-", params.dataset_name, params.pretrained, fold_num, acc, "-", "-"],
             columns=columns, path=results_path)
 
         print(

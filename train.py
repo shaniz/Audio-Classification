@@ -43,6 +43,7 @@ def train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_
         is_best = (acc > best_acc)
         if is_best:
             best_acc = acc
+            best_acc_epoch = epoch
         if scheduler:
             scheduler.step()
 
@@ -50,14 +51,14 @@ def train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_
         # model_num- for C
         # layer - for B3
         checkpoint_dir = os.path.join(params.checkpoint_dir, str(model_num), str(layer))
-        if epoch > 0 and (epoch % 20 == 0 or epoch == 69 or epoch == 449):  # 70 or 450
+        if is_best or (epoch > 0 and epoch % 20 == 0) or epoch == 69 or epoch == 449:  # 70 or 450
             utils.save_checkpoint({"epoch": epoch + 1,
                                    "model": model.state_dict(),
                                    "optimizer": optimizer.state_dict()}, is_best, split, "{}".format(checkpoint_dir))
         writer.add_scalar("data{}/trainingLoss{}".format(params.dataset_name, split), avg_loss, epoch)
         writer.add_scalar("data{}/valAcc{}".format(params.dataset_name, split), acc, epoch)
     writer.close()
-    return acc, best_acc
+    return acc, best_acc, best_acc_epoch
 
 
 def lr_lambda(epoch):
