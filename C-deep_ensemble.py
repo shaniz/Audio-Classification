@@ -61,7 +61,7 @@ if __name__ == "__main__":
             model = model_classes[params.model](params.dataset_name, params.pretrained).to(device)
             optimizer = torch.optim.Adam(model.parameters(), lr=params.lr, weight_decay=params.weight_decay)
             # Only pretrained here
-            scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)  # Always weight_fusion here
+            scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)  # Always pretrained here
             acc, best_acc, best_acc_epoch = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn,
                                                      writer, params, fold_num, scheduler, model_num)
 
