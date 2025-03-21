@@ -12,8 +12,8 @@ import models.resnet
 import train
 import utils
 
-config_path = "config/B1/resnet"
-results_path = "results/B1-resnet.csv"
+config_path = "config/B1/inception"
+results_path = "results/B1-inception.csv"
 os.makedirs(os.path.dirname(results_path), exist_ok=True)
 model_classes = {
     "densenet": models.densenet.DenseNet,
