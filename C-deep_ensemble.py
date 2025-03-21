@@ -36,8 +36,6 @@ model_classes = {
 }
 log_dir = "runs/C"
 columns = ["Model", "Model Number", "Dataset", "Pretrained", "Fold", "Acc", "Best Acc", "Best Acc - Epoch"]
-num_models = 5  # Number of models for the deep-ensemble
-fold_num = 1  # Working on this fold always
 
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -47,12 +45,13 @@ if __name__ == "__main__":
 
     for config_file in config_files:
         params = utils.Params(config_file)
-        train_loader = dataloaders.datasetaug.train_dataloader(params=params, fold_num=fold_num)
-        val_loader = dataloaders.datasetaug.val_dataloader(params=params, fold_num=fold_num)
+        # Working on the same fold for all models
+        train_loader = dataloaders.datasetaug.train_dataloader(params=params, fold_num=params.fold_num)
+        val_loader = dataloaders.datasetaug.val_dataloader(params=params, fold_num=params.fold_num)
 
         models_for_ensemble = []
 
-        for model_num in range(num_models):
+        for model_num in range(params.num_models):  # Number of models for the deep-ensemble
             print(f"\nWorking on {config_file} - model {model_num + 1}:")
             pretrained_subdir = "pretrained" if params.pretrained else "random"
             log_subdir = f"{params.model}/{pretrained_subdir}/{params.dataset_name}/model{model_num}"
@@ -63,13 +62,13 @@ if __name__ == "__main__":
             # Only pretrained here
             scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)  # Always pretrained here
             acc, best_acc, best_acc_epoch = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn,
-                                                     writer, params, fold_num, scheduler, model_num)
+                                                     writer, params, params.fold_num, scheduler, model_num)
 
             utils.wrtie_to_csv(
-                data=[params.model, model_num, params.dataset_name, params.pretrained, fold_num, acc, best_acc, best_acc_epoch],
+                data=[params.model, model_num, params.dataset_name, params.pretrained, params.fold_num, acc, best_acc, best_acc_epoch],
                 columns=columns, path=results_path)
             print(
-                f"Saved results for {params.model} {model_num} | {params.dataset_name} | Pretrained- {params.pretrained} | Fold {fold_num}")
+                f"Saved results for {params.model} {model_num} | {params.dataset_name} | Pretrained- {params.pretrained} | Fold {params.fold_num}")
 
             models_for_ensemble.append(model)
 
@@ -78,8 +77,8 @@ if __name__ == "__main__":
         acc = validate.evaluate(ensemble_model, device, val_loader)
 
         utils.wrtie_to_csv(
-            data=[f"ensemble-{params.model}", "-", params.dataset_name, params.pretrained, fold_num, acc, "-", "-"],
+            data=[f"ensemble-{params.model}", "-", params.dataset_name, params.pretrained, params.fold_num, acc, "-", "-"],
             columns=columns, path=results_path)
 
         print(
-            f"Saved results for ensemble-{params.model} | {params.dataset_name} | pretrained- {params.pretrained} | fold {fold_num}")
+            f"Saved results for ensemble-{params.model} | {params.dataset_name} | pretrained- {params.pretrained} | fold {params.fold_num}")
