@@ -26,8 +26,8 @@ class DeepEnsemble(nn.Module):
         return ensemble_output
 
 
-config_path = "config/C/densenet"
-results_path = "results/C-densenet.csv"
+config_path = "config/C/resnet"
+results_path = "results/C-resnet.csv"
 os.makedirs(os.path.dirname(results_path), exist_ok=True)
 model_classes = {
     "densenet": models.densenet.DenseNet,

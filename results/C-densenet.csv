@@ -1,5 +1,4 @@
 Model,Model Number,Dataset,Pretrained,Fold,Acc,Best Acc,Best Acc - Epoch
-Model,Model Number,Dataset,Pretrained,Fold,Acc,Best Acc,Best Acc - Epoch
 densenet,0,ESC,True,1,91.75,92.0,56
 densenet,1,ESC,True,1,93.75,94.25,52
 densenet,2,ESC,True,1,91.5,92.0,64
