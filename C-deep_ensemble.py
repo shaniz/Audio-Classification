@@ -26,25 +26,24 @@ class DeepEnsemble(nn.Module):
         return ensemble_output
 
 
-config_path = "config/C/resnet"
-results_path = "results/C-resnet.csv"
-os.makedirs(os.path.dirname(results_path), exist_ok=True)
+config_path = "config/C/inception"
 model_classes = {
     "densenet": models.densenet.DenseNet,
     "resnet": models.resnet.ResNet,
     "inception": models.inception.Inception,
 }
-log_dir = "runs/C"
 columns = ["Model", "Model Number", "Dataset", "Pretrained", "Fold", "Acc", "Best Acc", "Best Acc - Epoch"]
 
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    utils.wrtie_to_csv(columns=columns, path=results_path)
     loss_fn = nn.CrossEntropyLoss()
     config_files = utils.list_files(config_path)
 
     for config_file in config_files:
         params = utils.Params(config_file)
+        os.makedirs(os.path.dirname(params.results_path), exist_ok=True)
+        utils.wrtie_to_csv(columns=columns, path=params.results_path)
+
         # Working on the same fold for all models
         train_loader = dataloaders.datasetaug.train_dataloader(params=params, fold_num=params.fold_num)
         val_loader = dataloaders.datasetaug.val_dataloader(params=params, fold_num=params.fold_num)
@@ -55,7 +54,7 @@ if __name__ == "__main__":
             print(f"\nWorking on {config_file} - model {model_num + 1}:")
             pretrained_subdir = "pretrained" if params.pretrained else "random"
             log_subdir = f"{params.model}/{pretrained_subdir}/{params.dataset_name}/model{model_num}"
-            writer = SummaryWriter(log_dir=f"{log_dir}/{log_subdir}", comment=f"{log_subdir}")
+            writer = SummaryWriter(log_dir=f"{params.log_dir}/{log_subdir}", comment=f"{log_subdir}")
 
             model = model_classes[params.model](params.dataset_name, params.pretrained).to(device)
             optimizer = torch.optim.Adam(model.parameters(), lr=params.lr, weight_decay=params.weight_decay)
@@ -66,7 +65,7 @@ if __name__ == "__main__":
 
             utils.wrtie_to_csv(
                 data=[params.model, model_num, params.dataset_name, params.pretrained, params.fold_num, acc, best_acc, best_acc_epoch],
-                columns=columns, path=results_path)
+                columns=columns, path=params.results_path)
             print(
                 f"Saved results for {params.model} {model_num} | {params.dataset_name} | Pretrained- {params.pretrained} | Fold {params.fold_num}")
 
@@ -78,7 +77,7 @@ if __name__ == "__main__":
 
         utils.wrtie_to_csv(
             data=[f"ensemble-{params.model}", "-", params.dataset_name, params.pretrained, params.fold_num, acc, "-", "-"],
-            columns=columns, path=results_path)
+            columns=columns, path=params.results_path)
 
         print(
             f"Saved results for ensemble-{params.model} | {params.dataset_name} | pretrained- {params.pretrained} | fold {params.fold_num}")

@@ -13,32 +13,30 @@ import train
 import utils
 
 config_path = "config/B1/inception"
-results_path = "results/B1-inception.csv"
-os.makedirs(os.path.dirname(results_path), exist_ok=True)
 model_classes = {
     "densenet": models.densenet.DenseNet,
     "resnet": models.resnet.ResNet,
     "inception": models.inception.Inception,
 }
-log_dir = "runs/B1"
 columns = ["Model", "Dataset", "Pretrained", "Fold", "Acc", "Best Acc", "Best Acc - Epoch"]
 
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    utils.wrtie_to_csv(columns=columns, path=results_path)
     loss_fn = nn.CrossEntropyLoss()
     config_files = utils.list_files(config_path)
 
     for config_file in config_files:
         params = utils.Params(config_file)
+        os.makedirs(os.path.dirname(params.results_path), exist_ok=True)
+        utils.wrtie_to_csv(columns=columns, path=params.results_path)
 
         # Train and evaluate each fold
         for fold_num in range(1, params.num_folds + 1):
             print(f"\nWorking on {config_file} - fold {fold_num}:")
             pretrained_subdir = "pretrained" if params.pretrained else "random"
             log_subdir = f"{params.model}/{pretrained_subdir}/{params.dataset_name}/fold{fold_num}"
-            writer = SummaryWriter(log_dir=f"{log_dir}/{log_subdir}", comment=f"{log_subdir}")
+            writer = SummaryWriter(log_dir=f"{params.log_dir}/{log_subdir}", comment=f"{log_subdir}")
 
             train_loader = dataloaders.datasetaug.train_dataloader(params=params, fold_num=fold_num)
             val_loader = dataloaders.datasetaug.val_dataloader(params=params, fold_num=fold_num)
@@ -55,6 +53,6 @@ if __name__ == "__main__":
                                                      params, fold_num, scheduler)
 
             utils.wrtie_to_csv(data=[params.model, params.dataset_name, params.pretrained, fold_num, acc, best_acc, best_acc_epoch],
-                               columns=columns, path=results_path)
+                               columns=columns, path=params.results_path)
             print(
                 f"Saved results for {params.model} | {params.dataset_name} | pretrained- {params.pretrained} | fold {fold_num}")

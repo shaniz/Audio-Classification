@@ -11,14 +11,11 @@ import train
 import utils
 
 config_path = "config/B3/densenet/cutoff/esc.json"
-results_path = "results/B3.csv"
-os.makedirs(os.path.dirname(results_path), exist_ok=True)
 model_classes = {
     "densenet/weight_fusion": models.densenet.DenseNetWeightFusion,
     "densenet/weight_freeze": models.densenet.DenseNetWeightFreeze,
     "densenet/cutoff": models.densenet.DenseNetModelCutoff
 }
-log_dir = "runs/B3"
 columns = ["Model", "Dataset", "Fold", "Layer", "Acc", "Best Acc", "Best Acc - Epoch"]
 layers_by_model = {
     "densenet/weight_fusion": ["conv0", "denseblock1", "denseblock2", "denseblock3", "denseblock4"],
@@ -29,12 +26,13 @@ layers_by_model = {
 
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    utils.wrtie_to_csv(columns=columns, path=results_path)
     loss_fn = nn.CrossEntropyLoss()
     config_files = utils.list_files(config_path)
 
     for config_file in config_files:
         params = utils.Params(config_file)
+        os.makedirs(os.path.dirname(params.results_path), exist_ok=True)
+        utils.wrtie_to_csv(columns=columns, path=params.results_path)
 
         # Train and evaluate each fold
         for fold_num in range(1, params.num_folds + 1):
@@ -46,7 +44,7 @@ if __name__ == "__main__":
                 print(f"\nWorking on {config_file} - layer {layer} - fold {fold_num}:")
 
                 log_subdir = f"{params.model}/{params.dataset_name}/fold{fold_num}/{layer}"
-                writer = SummaryWriter(log_dir=f"{log_dir}/{log_subdir}", comment=f"{log_subdir}")
+                writer = SummaryWriter(log_dir=f"{params.log_dir}/{log_subdir}", comment=f"{log_subdir}")
 
                 model = model_classes[params.model](params.dataset_name, layer, params.pretrained).to(device)
                 optimizer = torch.optim.Adam(model.parameters(), lr=params.lr, weight_decay=params.weight_decay)
@@ -58,6 +56,6 @@ if __name__ == "__main__":
 
                 utils.wrtie_to_csv(
                     data=[params.model, params.dataset_name, fold_num, layer, acc, best_acc, best_acc_epoch],
-                    columns=columns, path=results_path)
+                    columns=columns, path=params.results_path)
                 print(
                     f"Saved results for {params.model} | {params.dataset_name} | fold {fold_num} | layer {layer}")
