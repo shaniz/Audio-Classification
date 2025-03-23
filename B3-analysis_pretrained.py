@@ -10,7 +10,7 @@ import models.densenet
 import train
 import utils
 
-config_path = "config/B3/densenet/weight_freeze/esc.json"
+config_path = "config/B3/densenet/cutoff/esc.json"
 model_classes = {
     "densenet/weight_fusion": models.densenet.DenseNetWeightFusion,
     "densenet/weight_freeze": models.densenet.DenseNetWeightFreeze,
