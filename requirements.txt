@@ -7,3 +7,4 @@ pillow==11.1.0
 tqdm==4.67.1
 tensorboardX==2.6.2.2
 lmdb==1.6.2
+matplotlib==3.10.1
