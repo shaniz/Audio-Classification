@@ -11,5 +11,7 @@
   "lr": 1e-4,
   "weight_decay": 1e-3,
   "num_folds": 10,
-  "checkpoint_dir": "checkpoints/B1/resnet/random/usc"
+  "checkpoint_dir": "checkpoints/B1/resnet/random/usc",
+  "results_path": "results/B1/B1-resnet.csv",
+  "log_dir": "runs/B1"
 }

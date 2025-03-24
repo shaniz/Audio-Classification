@@ -6,10 +6,13 @@
   "scheduler": true,
   "model": "resnet",
   "batch_size": 32,
-  "num_workers": 2,
+  "num_workers": 8,
   "epochs": 70,
   "lr": 1e-4,
   "weight_decay": 1e-3,
-  "num_folds": 1,
-  "checkpoint_dir": "checkpoints/C/resnet/pretrained/gtzan"
+  "fold_num": 1,
+  "num_models": 5,
+  "checkpoint_dir": "checkpoints/C/resnet/pretrained/gtzan",
+  "results_path": "results/C/C-resnet.csv",
+  "log_dir": "runs/C"
 }

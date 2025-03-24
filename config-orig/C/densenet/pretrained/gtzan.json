@@ -10,6 +10,9 @@
   "epochs": 70,
   "lr": 1e-4,
   "weight_decay": 1e-3,
-  "num_folds": 1,
-  "checkpoint_dir": "checkpoints/C/densenet/pretrained/gtzan"
+  "fold_num": 1,
+  "num_models": 5,
+  "checkpoint_dir": "checkpoints/C/densenet/pretrained/gtzan",
+  "results_path": "results/C/C-densenet.csv",
+  "log_dir": "runs/C"
 }
