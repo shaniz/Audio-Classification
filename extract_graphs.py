@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def plot_accuracy_vs_layer(d, prefix):
+def plot_accuracy_vs_layer(df, prefix):
     plt.figure(figsize=(10, 6))
 
     # Plot Accuracy and Best Accuracy for each layer
