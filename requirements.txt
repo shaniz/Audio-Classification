@@ -1,0 +1,10 @@
+librosa==0.10.2.post1
+pandas==2.2.3
+torch==2.6.0
+torchaudio==2.6.0
+torchvision==0.21.0
+pillow==11.1.0
+tqdm==4.67.1
+tensorboardX==2.6.2.2
+lmdb==1.6.2
+matplotlib==3.10.1

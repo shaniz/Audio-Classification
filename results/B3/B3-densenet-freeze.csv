@@ -1,0 +1,6 @@
+Model,Dataset,Fold,Layer,Acc,Best Acc,Best Acc - Epoch
+densenet/weight_freeze,ESC,1,conv0,89.25,90.0,58
+densenet/weight_freeze,ESC,1,denseblock1,90.5,90.75,67
+densenet/weight_freeze,ESC,1,denseblock2,89.75,90.5,47
+densenet/weight_freeze,ESC,1,denseblock3,86.5,88.0,42
+densenet/weight_freeze,ESC,1,denseblock4,64.25,64.25,29

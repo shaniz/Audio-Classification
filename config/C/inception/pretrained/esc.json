@@ -1,0 +1,18 @@
+{
+  "dataset_name": "ESC",
+  "data_dir": "spectrograms/esc/",
+  "dataaug": true,
+  "pretrained": true,
+  "scheduler": true,
+  "model": "inception",
+  "batch_size": 32,
+  "num_workers": 6,
+  "epochs": 70,
+  "lr": 1e-4,
+  "weight_decay": 1e-3,
+  "fold_num": 1,
+  "num_models": 5,
+  "checkpoint_dir": "checkpoints/C/inception/pretrained/esc",
+  "results_path": "results/C/C-inception.csv",
+  "log_dir": "runs/C"
+}

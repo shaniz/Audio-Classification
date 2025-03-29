@@ -1,0 +1,7 @@
+Model,Model Number,Dataset,Pretrained,Fold,Acc,Best Acc,Best Acc - Epoch
+inception,0,ESC,True,1,89.5,90.0,56
+inception,1,ESC,True,1,92.0,92.25,51
+inception,2,ESC,True,1,88.5,90.5,39
+inception,3,ESC,True,1,89.75,90.75,43
+inception,4,ESC,True,1,91.0,91.5,43
+ensemble-inception,-,ESC,True,1,94.0,-,-

@@ -1,23 +1,9 @@
-import torch
-import torchvision
-import torch.nn as nn
-import numpy as np
-import json
-import utils
-import validate
-import argparse
-import models.densenet
-import models.resnet
-import models.inception
-import time
-import dataloaders.datasetaug
-import dataloaders.datasetnormal
+import os
 
 from tqdm import tqdm
-from tensorboardX import SummaryWriter
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--config_path", type=str)
+import utils
+import validate
 
 
 def train(model, device, data_loader, optimizer, loss_fn):
@@ -44,7 +30,8 @@ def train(model, device, data_loader, optimizer, loss_fn):
     return loss_avg()
 
 
-def train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn, writer, params, split, scheduler=None):
+def train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn, writer, params, split,
+                       scheduler=None, model_num="", layer=""):
     best_acc = 0.0
 
     for epoch in range(params.epochs):
@@ -56,46 +43,25 @@ def train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_
         is_best = (acc > best_acc)
         if is_best:
             best_acc = acc
+            best_acc_epoch = epoch
         if scheduler:
             scheduler.step()
 
-        utils.save_checkpoint({"epoch": epoch + 1,
-                               "model": model.state_dict(),
-                               "optimizer": optimizer.state_dict()}, is_best, split, "{}".format(params.checkpoint_dir))
+        # Another subdirectory for deepensemble training
+        # model_num- for C
+        # layer - for B3
+        checkpoint_dir = os.path.join(params.checkpoint_dir, str(model_num), str(layer))
+        if is_best or (epoch > 0 and epoch % 20 == 0) or epoch == 69 or epoch == 449:  # 70 or 450
+            utils.save_checkpoint({"epoch": epoch + 1,
+                                   "model": model.state_dict(),
+                                   "optimizer": optimizer.state_dict()}, is_best, split, "{}".format(checkpoint_dir))
         writer.add_scalar("data{}/trainingLoss{}".format(params.dataset_name, split), avg_loss, epoch)
-        writer.add_scalar("data{}/valLoss{}".format(params.dataset_name, split), acc, epoch)
+        writer.add_scalar("data{}/valAcc{}".format(params.dataset_name, split), acc, epoch)
     writer.close()
+    return acc, best_acc, best_acc_epoch
 
 
-if __name__ == "__main__":
-    args = parser.parse_args()
-    params = utils.Params(args.config_path)
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-    for i in range(1, params.num_folds+1):
-        if params.dataaug:
-            train_loader = dataloaders.datasetaug.fetch_dataloader( "{}training128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers, 'train')
-            val_loader = dataloaders.datasetaug.fetch_dataloader("{}validation128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers, 'validation')
-        else:
-            train_loader = dataloaders.datasetnormal.fetch_dataloader( "{}training128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers)
-            val_loader = dataloaders.datasetnormal.fetch_dataloader("{}validation128mel{}.pkl".format(params.data_dir, i), params.dataset_name, params.batch_size, params.num_workers)
-
-        writer = SummaryWriter(comment=params.dataset_name)
-        if params.model=="densenet":
-            model = models.densenet.DenseNet(params.dataset_name, params.pretrained).to(device)
-        elif params.model=="resnet":
-            model = models.resnet.ResNet(params.dataset_name, params.pretrained).to(device)
-        elif params.model=="inception":
-            model = models.inception.Inception(params.dataset_name, params.pretrained).to(device) 
-
-        loss_fn = nn.CrossEntropyLoss()
-        optimizer = torch.optim.Adam(model.parameters(), lr=params.lr, weight_decay=params.weight_decay)
-
-        if params.scheduler:
-            scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 30, gamma=0.1)
-        else:
-            scheduler = None
-
-        train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn, writer, params, i, scheduler)
-
-
+def lr_lambda(epoch):
+    if epoch == 299 | epoch == 349:  # 300 or 350
+        return 0.1
+    return 1.0

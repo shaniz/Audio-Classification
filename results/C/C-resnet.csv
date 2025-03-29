@@ -1,0 +1,7 @@
+Model,Model Number,Dataset,Pretrained,Fold,Acc,Best Acc,Best Acc - Epoch
+resnet,0,ESC,True,1,86.0,87.5,53
+resnet,1,ESC,True,1,87.25,88.0,54
+resnet,2,ESC,True,1,90.0,90.75,53
+resnet,3,ESC,True,1,89.25,90.0,46
+resnet,4,ESC,True,1,89.25,90.25,67
+ensemble-resnet,-,ESC,True,1,91.25,-,-

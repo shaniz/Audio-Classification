@@ -1,0 +1,3 @@
+Model,Dataset,Fold,Layer,Acc,Best Acc,Best Acc - Epoch
+densenet/cutoff,ESC,1,denseblock3,82.0,82.5,56
+densenet/cutoff,ESC,1,denseblock4,91.0,91.5,66
