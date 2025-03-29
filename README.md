@@ -37,11 +37,10 @@ The sample_config.json explains the details of all the variables in the configur
 The command for training each part of the paper is:
 
 ```console
-python <part-file-name> --config_path /config/your_config.json
+python <part-file-name> --config_path config/your_config.json
 ```
 
-You can also give a folder for working on all the config files under it. 
-For example:
+You can also give a folder for working on all the config files under it, for example:
 ```console
 python B3-analysis_pretrained.py --config_path config/B3/densenet/weight_fusion
 ```
