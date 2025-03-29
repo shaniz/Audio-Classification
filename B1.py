@@ -1,9 +1,9 @@
+import argparse
 import os
 
 import torch
 import torch.nn as nn
 from tensorboardX import SummaryWriter
-import argparse
 
 import dataloaders.datasetaug
 import dataloaders.datasetnormal
@@ -51,11 +51,13 @@ if __name__ == "__main__":
             else:
                 scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, train.lr_lambda)
 
-            acc, best_acc, best_acc_epoch = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer, loss_fn,
-                                                     writer,
-                                                     params, fold_num, scheduler)
+            acc, best_acc, best_acc_epoch = train.train_and_evaluate(model, device, train_loader, val_loader, optimizer,
+                                                                     loss_fn,
+                                                                     writer,
+                                                                     params, fold_num, scheduler)
 
-            utils.wrtie_to_csv(data=[params.model, params.dataset_name, params.pretrained, fold_num, acc, best_acc, best_acc_epoch],
-                               columns=columns, path=params.results_path)
+            utils.wrtie_to_csv(
+                data=[params.model, params.dataset_name, params.pretrained, fold_num, acc, best_acc, best_acc_epoch],
+                columns=columns, path=params.results_path)
             print(
                 f"Saved results for {params.model} | {params.dataset_name} | pretrained- {params.pretrained} | fold {fold_num}")
