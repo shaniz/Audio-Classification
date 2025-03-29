@@ -3,6 +3,7 @@ import os
 import torch
 import torch.nn as nn
 from tensorboardX import SummaryWriter
+import argparse
 
 import dataloaders.datasetaug
 import dataloaders.datasetnormal
@@ -26,7 +27,9 @@ class DeepEnsemble(nn.Module):
         return ensemble_output
 
 
-config_path = "config/C/inception"
+parser = argparse.ArgumentParser()
+parser.add_argument("--config_path", type=str)
+
 model_classes = {
     "densenet": models.densenet.DenseNet,
     "resnet": models.resnet.ResNet,
@@ -37,7 +40,8 @@ columns = ["Model", "Model Number", "Dataset", "Pretrained", "Fold", "Acc", "Bes
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     loss_fn = nn.CrossEntropyLoss()
-    config_files = utils.list_files(config_path)
+    args = parser.parse_args()
+    config_files = utils.list_files(args.config_path)
 
     for config_file in config_files:
         params = utils.Params(config_file)

@@ -3,6 +3,7 @@ import os
 import torch
 import torch.nn as nn
 from tensorboardX import SummaryWriter
+import argparse
 
 import dataloaders.datasetaug
 import dataloaders.datasetnormal
@@ -10,7 +11,9 @@ import models.densenet
 import train
 import utils
 
-config_path = "config/B3/densenet/weight_fusion/esc.json"
+parser = argparse.ArgumentParser()
+parser.add_argument("--config_path", type=str)
+
 model_classes = {
     "densenet/weight_fusion": models.densenet.DenseNetWeightFusion,
     "densenet/weight_freeze": models.densenet.DenseNetWeightFreeze,
@@ -27,7 +30,8 @@ layers_by_model = {
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     loss_fn = nn.CrossEntropyLoss()
-    config_files = utils.list_files(config_path)
+    args = parser.parse_args()
+    config_files = utils.list_files(args.config_path)
 
     for config_file in config_files:
         params = utils.Params(config_file)

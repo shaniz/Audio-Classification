@@ -1,6 +1,6 @@
 # Rethinking CNN Models for Audio Classification
 
-This repository contains the PyTorch code for our
+This repository contains the PyTorch code for the
 paper [Rethinking CNN Models for Audio Classification](https://arxiv.org/abs/2007.11154). The experiments are conducted
 on the following three datasets which can be downloaded from the links provided:
 
@@ -32,21 +32,30 @@ python preprocessing/preprocessingGTZAN.py --data_dir /path/to/audio_data/ --sto
 
 ### Training the Models
 
-The configurations for training the models are provided in the config folder. The sample_config.json explains the
-details of all the variables in the configurations. The command for training is:
+The configurations for training the models are provided in the config folder. 
+The sample_config.json explains the details of all the variables in the configurations. 
+The command for training each part of the paper is:
 
 ```console
-python train.py --config_path /config/your_config.json
+python <part-file-name> --config_path /config/your_config.json
+```
+
+You can also give a folder for working on all the config files under it. 
+For example:
+```console
+python B3-analysis_pretrained.py --config_path config/B3/densenet/weight_fusion
 ```
 
 ### Folders Structure
 For folders: checkpoints, config, runs (tensorBoard):
 
 ```console
-<part-in-the-paper>/<model-name>/<weights>/<dataset>
+<folder-name>/<part-in-the-paper>/<model-name>/<weights>/<dataset>
 ```
 
-### Number of Parameters
-Densnet201 - 20.2M
-Inceptionv3 - 24M
-Resnet50 - 25.6M
+### Results
+Appear in the results folder:
+
+```console
+results/<part-in-the-paper>/<part-in-the-paper+model>
+```
