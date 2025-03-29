@@ -8,8 +8,8 @@ on the following three datasets which can be downloaded from the links provided:
 2. [UrbanSound8K](https://urbansounddataset.weebly.com/urbansound8k.html)
 3. [GTZAN](https://www.kaggle.com/andradaolteanu/gtzan-dataset-music-genre-classification)
 
-### Python
-Python version - 3.10.
+### Python Version
+Python 3.10.
 
 ### Preprocessing
 
