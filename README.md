@@ -46,6 +46,12 @@ For example:
 python B3-analysis_pretrained.py --config_path config/B3/densenet/weight_fusion
 ```
 
+The training process (loss+accuracy) are saved in the 'runs' directory.
+You can see the training process by running:
+```console
+tensorboard --logdir=<log-directory>
+```
+
 ### Folders Structure
 For folders: checkpoints, config, runs (tensorBoard):
 
