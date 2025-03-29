@@ -54,7 +54,7 @@ For folders: checkpoints, config, runs (tensorBoard):
 ```
 
 ### Results
-Appear in the results folder:
+Appear in the 'results' folder:
 
 ```console
 results/<part-in-the-paper>/<part-in-the-paper+model>
