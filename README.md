@@ -6,6 +6,12 @@
 This project contains the PyTorch code and the report for reproducing and extending the
 paper [Rethinking CNN Models for Audio Classification](https://arxiv.org/abs/2007.11154). 
 
+### Original Repo from Paper
+[original-repo-from-paper](https://github.com/kamalesh0406/Audio-Classification.git)
+
+### Our Repo
+[our-repo](https://github.com/shaniz/Audio-Classification.git)
+
 ### Python Version
 Python 3.10.
 
