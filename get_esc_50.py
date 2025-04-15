@@ -7,9 +7,6 @@ dataset_path = "./ESC-50"
 zip_path = "./ESC-50.zip"
 download_url = "https://github.com/karolpiczak/ESC-50/archive/master.zip"
 
-# Create the directory if it doesn't exist
-if not os.path.exists(dataset_path):
-    os.makedirs(dataset_path)
 
 # Download the dataset if it doesn't exist
 if not os.path.exists(zip_path):

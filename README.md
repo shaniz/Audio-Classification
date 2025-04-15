@@ -13,13 +13,21 @@ Python 3.10.
 The experiments are conducted on the dataset ESC-50 which can be downloaded from the link:
 [ESC-50](https://github.com/karolpiczak/ESC-50) or by running the script get_esc_50.py 
 
-
 ### Preprocessing
 The preprocessing is done separately to save time during the training of the models.
 It creates 5 folds of spectrogram inputs for training and evaluation.
 For ESC-50:
 ```console
-python preprocessing/preprocessingESC.py --csv_file /path/to/file.csv --data_dir /path/to/audio_data/ --store_dir spectrograms/esc/ --sampling_rate 44100
+python preprocessing/preprocessingESC.py --csv_file path/to/file.csv --data_dir path/to/audio_data/ --store_dir spectrograms/esc/ --sampling_rate 44100
+```
+After running the script mentioned in the Dataset section:
+```console
+--data_dir -> ESC-50/audio
+--csv_file -> ESC-50/meta/esc50.csv
+```
+So the preprocessing command should be:
+```console
+python preprocessing/preprocessingESC.py --csv_file ESC-50/meta/esc50.csv --data_dir ESC-50/audio --store_dir spectrograms/esc/ --sampling_rate 44100
 ```
 
 ### Experiment parts

@@ -1,16 +1,14 @@
-import torch
+import os
+
 import numpy as np
 import argparse
-import cca_core
-import pickle
-import gzip
-from dataloaders.datasetaug import val_dataloader
-from utils import Params
 import torch
 
-##### ADD TO requirements:
-# pip install scikit-learn
-# pip install --no-deps cca_core
+import cca_core
+
+from dataloaders.datasetaug import val_dataloader
+from utils import Params
+from models.densenet import DenseNet
 
 
 def load_checkpoint_analysis(checkpoint_path, model, optimizer=None, parallel=False):
@@ -43,6 +41,7 @@ class Hook:
                 def hook_fn(m, i, o, n=name):
                     print(f"🔥 Activation captured for: {n}, shape: {o.shape}")
                     self.acts[n].append(o.detach().cpu().numpy())
+
                 mod.register_forward_hook(hook_fn)
 
     def get(self):
@@ -59,7 +58,7 @@ def svcca(a, b):
         # Swap batch and feature dims: (B, C, H, W) → (C, B * H * W)
         A = a[k].transpose(1, 0, 2, 3).reshape(a[k].shape[1], -1)
         B = b[k].transpose(1, 0, 2, 3).reshape(b[k].shape[1], -1)
-        out[k] = np.mean(robust_cca_similarity(A, B)['cca_coef1'])
+        out[k] = np.mean(cca_core.robust_cca_similarity(A, B)['cca_coef1'])
     return out
 
 
@@ -68,7 +67,8 @@ if __name__ == '__main__':
     parser.add_argument('--config_pre', type=str, required=True, help='Path to pretraind model config file')
     parser.add_argument('--config_rnd', type=str, required=True, help='Path to random weights model config file')
     parser.add_argument('--ckpt_pre', type=str, required=True, help='Checkpoint path of pretrained fine tuned model')
-    parser.add_argument('--ckpt_rnd', type=str, required=True, action='store_true', help='Checkpoint path of random weights trained model')
+    parser.add_argument('--ckpt_rnd', type=str, required=True, action='store_true',
+                        help='Checkpoint path of random weights trained model')
     args = parser.parse_args()
 
     # ------- Pretrained SVCCA score ----------
