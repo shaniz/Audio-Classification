@@ -10,5 +10,4 @@ lmdb==1.6.2
 matplotlib==3.10.1
 
 scikit-learn
-cca_core
 requests
