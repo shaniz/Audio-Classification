@@ -9,6 +9,7 @@ import dataloaders.datasetaug
 import dataloaders.datasetnormal
 import models.densenet
 import models.inception
+import models.efficientnet
 import models.resnet
 import train
 import utils
@@ -20,6 +21,7 @@ model_classes = {
     "densenet": models.densenet.DenseNet,
     "resnet": models.resnet.ResNet,
     "inception": models.inception.Inception,
+    "efficientnet": models.efficientnet.EfficientNet,
 }
 columns = ["Model", "Dataset", "Pretrained", "Fold", "Acc", "Best Acc", "Best Acc - Epoch"]
 
