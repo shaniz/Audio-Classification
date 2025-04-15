@@ -20,7 +20,7 @@ For ESC-50:
 ```console
 python preprocessing/preprocessingESC.py --csv_file path/to/file.csv --data_dir path/to/audio_data/ --store_dir spectrograms/esc/ --sampling_rate 44100
 ```
-After running the script mentioned in the Dataset section:
+After running the script mentioned in the Dataset section (the final directory is attached):
 ```console
 --data_dir -> ESC-50/audio
 --csv_file -> ESC-50/meta/esc50.csv
