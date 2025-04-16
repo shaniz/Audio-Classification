@@ -6,7 +6,6 @@ from tensorboardX import SummaryWriter
 import argparse
 
 import dataloaders.datasetaug
-import dataloaders.datasetnormal
 import models.densenet
 import train
 import utils
