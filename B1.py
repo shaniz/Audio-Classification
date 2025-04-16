@@ -1,9 +1,9 @@
-import argparse
 import os
 
 import torch
 import torch.nn as nn
 from tensorboardX import SummaryWriter
+import argparse
 
 import dataloaders.datasetaug
 import models.densenet
